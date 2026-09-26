@@ -1,0 +1,901 @@
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  motion,
+  MotionConfig,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+
+const EMAIL = "akulv.work@gmail.com";
+const ease = [0.22, 1, 0.36, 1] as const;
+function Arrow({ down = false }: { down?: boolean }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={down ? "arrow-down" : ""}
+    >
+      <path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
+function Reveal({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const reduced = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={false}
+      whileInView={reduced ? undefined : { y: [18, 0] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, ease }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+function Label({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return <p className={`label ${className}`}>{children}</p>;
+}
+function Header() {
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
+  return (
+    <header className="header shell">
+      <a className="brand" href="#top" aria-label="Akul Varshney, back to top">
+        akul varshney<span className="brand-dot">.</span>
+      </a>
+      <span className="header-note label">ENGINEERING WITH INTENT</span>
+      <button
+        className="menu-button"
+        ref={menuButton}
+        aria-expanded={open}
+        aria-controls="navigation"
+        onClick={() => setOpen(!open)}
+      >
+        {open ? "Close −" : "Menu +"}
+      </button>
+      <nav
+        id="navigation"
+        className={open ? "nav is-open" : "nav"}
+        aria-label="Main navigation"
+      >
+        {[
+          ["Work", "work"],
+          ["Approach", "approach"],
+          ["Contact", "contact"],
+        ].map(([name, id]) => (
+          <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>
+            {name}
+            {id === "contact" && <Arrow />}
+          </a>
+        ))}
+      </nav>
+    </header>
+  );
+}
+function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 90]);
+  return (
+    <section className="hero shell" id="top" ref={ref}>
+      <div className="hero-overline">
+        <Label>SOFTWARE ENGINEER & PRODUCT BUILDER</Label>
+        <Label>BASED IN INDIA · BUILDING EVERYWHERE</Label>
+      </div>
+      <motion.div style={{ y }} className="hero-title">
+        <h1>
+          I build products
+          <br />
+          that <em>think.</em>
+          <span className="hero-asterisk" aria-hidden="true">
+            ✳
+          </span>
+        </h1>
+      </motion.div>
+      <div className="hero-bottom">
+        <p>
+          Engineering the systems.
+          <br />
+          Considering the people.
+        </p>
+        <p className="hero-disciplines">
+          Software Engineering <span>×</span> AI <span>×</span> Product
+        </p>
+        <a
+          href="#work"
+          className="scroll-link"
+          aria-label="Discover selected work"
+        >
+          <span className="label">SCROLL TO DISCOVER</span>
+          <Arrow down />
+        </a>
+      </div>
+      <div className="hero-folio label">
+        <span>SELECTED WORK / 2023—2026</span>
+        <span>01 — AN INTRODUCTION</span>
+      </div>
+    </section>
+  );
+}
+const railSteps = [
+  {
+    name: "Order",
+    detail: "One request. Many moving parts.",
+    text: "Orders enter a shared platform connecting catering operations with existing business systems.",
+    technology: "Node.js · Business system integrations",
+  },
+  {
+    name: "Queue",
+    detail: "Built for the busy moments.",
+    text: "Background jobs separate time-sensitive requests from downstream processing, keeping peak operations dependable.",
+    technology: "Redis · BullMQ · Asynchronous processing",
+  },
+  {
+    name: "Fulfil",
+    detail: "A connected operational record.",
+    text: "Food supply and transaction records stay connected across the workflow, giving teams a shared source of truth.",
+    technology: "MongoDB · Transaction workflows",
+  },
+];
+function RailDemo() {
+  const [step, setStep] = useState(0);
+  return (
+    <div className="rail-demo">
+      <div className="demo-bar">
+        <Label>RISE / OPERATIONS NETWORK</Label>
+        <span className="label demo-state">
+          <i /> SYSTEM WALKTHROUGH
+        </span>
+      </div>
+      <p className="rail-instruction label">
+        SELECT A STAGE TO FOLLOW THE SYSTEM ↓
+      </p>
+      <div className="rail-scene">
+        <svg
+          className="rail-lines"
+          viewBox="0 0 1000 330"
+          preserveAspectRatio="none"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M0 45H140L330 165H660L850 65H1000M0 165H1000M0 285H140L330 165H660L850 265H1000"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <path
+            d={
+              step === 0
+                ? "M0 165H330"
+                : step === 1
+                  ? "M330 165H660"
+                  : "M660 165L850 65H1000"
+            }
+            className="route-active"
+            strokeWidth="2"
+          />
+          <circle
+            cx={step === 0 ? 95 : step === 1 ? 395 : 910}
+            cy={step === 2 ? 65 : 165}
+            r="5"
+            fill="var(--rail-accent)"
+          />
+        </svg>
+        <div
+          className="rail-stages"
+          role="group"
+          aria-label="Explore the rail catering workflow"
+        >
+          {railSteps.map((s, i) => (
+            <button
+              key={s.name}
+              onClick={() => setStep(i)}
+              aria-pressed={step === i}
+              className={step === i ? "rail-node active" : "rail-node"}
+            >
+              <span className="node-number">0{i + 1}</span>
+              <strong>{s.name}</strong>
+              <span className="node-marker">{step === i ? "●" : "↗"}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="rail-explainer" aria-live="polite">
+        <div>
+          <Label>0{step + 1} / THE ENGINEERING</Label>
+          <h3>{railSteps[step].detail}</h3>
+        </div>
+        <div>
+          <p>{railSteps[step].text}</p>
+          <span className="tech-line">{railSteps[step].technology}</span>
+        </div>
+      </div>
+      <p className="demo-disclaimer label">
+        ILLUSTRATIVE SYSTEM MODEL · NOT A LIVE FEED
+      </p>
+    </div>
+  );
+}
+function ProjectHead({
+  n,
+  category,
+  name,
+  children,
+}: {
+  n: string;
+  category: string;
+  name: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="project-heading">
+      <div className="project-ident">
+        <span className="project-number">{n}</span>
+        <Label>{category}</Label>
+      </div>
+      <Reveal>
+        <Label>{name}</Label>
+        <h2>{children}</h2>
+      </Reveal>
+    </div>
+  );
+}
+function Rail() {
+  return (
+    <article className="rail chapter" id="rise">
+      <div className="shell">
+        <ProjectHead
+          n="01"
+          category="SYSTEMS AT SCALE"
+          name="NATIONAL RAIL CATERING / RISE"
+        >
+          A moving country.
+          <br />A connected <em>system.</em>
+        </ProjectHead>
+        <div className="project-intro">
+          <p>
+            Infrastructure behind food supply
+            <br className="desktop-break" /> across 300+ trains.
+          </p>
+          <p>
+            Architecture led within a 4–6 person team at Orane Consulting, for
+            RK Group, an IRCTC vendor. Connecting everyday operations to the
+            scale they demand.
+          </p>
+        </div>
+        <Reveal>
+          <RailDemo />
+        </Reveal>
+        <div className="project-results">
+          <div>
+            <strong>
+              100K<span>+</span>
+            </strong>
+            <p>daily transactions supported</p>
+          </div>
+          <div>
+            <strong>
+              300<span>+</span>
+            </strong>
+            <p>trains on one platform</p>
+          </div>
+          <div>
+            <strong>
+              40<span>%</span>
+            </strong>
+            <p>faster service responses</p>
+          </div>
+          <p className="result-note">
+            Scale is a design constraint.
+            <br />
+            Reliability is the product.
+          </p>
+        </div>
+      </div>
+    </article>
+  );
+}
+const reviewStages = [
+  {
+    label: "Extract",
+    title: "From documents to structured data.",
+    body: "Document processing organizes the information reviewers need, with a record of where each result came from.",
+    field: "Information extracted",
+    value: "4 fields ready for review",
+  },
+  {
+    label: "Compare",
+    title: "Make the inconsistency visible.",
+    body: "Cross-document analysis surfaces conflicting dates and unusual values so exceptions can be reviewed in context.",
+    field: "Date discrepancy detected",
+    value: "Discharge summary: 14 Aug",
+  },
+  {
+    label: "Review",
+    title: "The final decision stays human.",
+    body: "Flagged exceptions move to a reviewer, with the supporting context and an audit history. AI assists the decision.",
+    field: "Assigned to human review",
+    value: "Supporting evidence attached",
+  },
+];
+function ClaimsDemo() {
+  const [stage, setStage] = useState(1);
+  return (
+    <div className="claims-demo">
+      <div className="claim-document">
+        <div className="document-title">
+          <span className="document-mark">c.</span>
+          <Label>
+            CLAIM / 0248
+            <br />
+            ILLUSTRATIVE DATA
+          </Label>
+        </div>
+        <h3>
+          Clarity begins <br />
+          with the details.
+        </h3>
+        <div className="document-fields">
+          <div>
+            <span>Document type</span>
+            <strong>Hospital invoice</strong>
+          </div>
+          <div>
+            <span>Admission date</span>
+            <strong>09 August 2026</strong>
+          </div>
+          <div className={stage > 0 ? "flagged-field" : ""}>
+            <span>Discharge date</span>
+            <strong>
+              12 August 2026 {stage > 0 && <span aria-label="flagged">↗</span>}
+            </strong>
+          </div>
+          <div>
+            <span>Claim reference</span>
+            <strong>CLM–2026–0248</strong>
+          </div>
+        </div>
+        <div className="document-footer label">
+          SOURCE RETAINED · DECISIONS TRACEABLE
+        </div>
+      </div>
+      <div className="claim-analysis">
+        <div
+          className="step-selector"
+          role="group"
+          aria-label="Explore claims intelligence"
+        >
+          {reviewStages.map((s, i) => (
+            <button
+              key={s.label}
+              aria-pressed={stage === i}
+              onClick={() => setStage(i)}
+            >
+              <span>0{i + 1}</span>
+              {s.label}
+            </button>
+          ))}
+        </div>
+        <div className="analysis-body" aria-live="polite">
+          <span className="analysis-symbol" aria-hidden="true">
+            {stage === 0 ? "≡" : stage === 1 ? "≠" : "↗"}
+          </span>
+          <h3>{reviewStages[stage].title}</h3>
+          <p>{reviewStages[stage].body}</p>
+          <div className="analysis-result">
+            <span className="label">{reviewStages[stage].field}</span>
+            <strong>{reviewStages[stage].value}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Claims() {
+  return (
+    <article className="claims chapter" id="claims">
+      <div className="shell">
+        <ProjectHead
+          n="02"
+          category="APPLIED INTELLIGENCE"
+          name="AI CLAIMS INTELLIGENCE / EXL"
+        >
+          Less searching.
+          <br />
+          More <em>understanding.</em>
+        </ProjectHead>
+        <div className="project-intro">
+          <p>
+            AI that brings clarity.
+            <br />
+            People who make the call.
+          </p>
+          <p>
+            I build services connecting document processing, AI analysis, and
+            human review, turning complex insurance documents into reviewable
+            information.
+          </p>
+        </div>
+        <Reveal>
+          <ClaimsDemo />
+        </Reveal>
+        <div className="project-caption">
+          <Label>FASTAPI / LANGGRAPH / AZURE OPENAI</Label>
+          <p>Intelligence is useful when you can trust the process.</p>
+        </div>
+      </div>
+    </article>
+  );
+}
+const fleetViews = [
+  {
+    name: "Dispatch",
+    heading: "Every request has a route.",
+    text: "Bookings, approvals, and dispatch connect employees, managers, and fleet teams.",
+    points: [
+      [180, 110],
+      [440, 190],
+      [610, 85],
+    ],
+    status: "Request → approval → assignment",
+  },
+  {
+    name: "Tracking",
+    heading: "A shared view of the fleet.",
+    text: "Real-time vehicle locations bring operational context into the same workspace.",
+    points: [
+      [250, 160],
+      [470, 100],
+      [590, 210],
+    ],
+    status: "Vehicle → location → operations",
+  },
+  {
+    name: "Fuel",
+    heading: "Account for the journey.",
+    text: "Fuel management connects vehicle use with the operational records teams rely on.",
+    points: [
+      [180, 230],
+      [390, 125],
+      [580, 155],
+    ],
+    status: "Vehicle → fuel record → reporting",
+  },
+];
+function Fleet() {
+  const [view, setView] = useState(0);
+  const reduced = useReducedMotion();
+  return (
+    <article className="fleet chapter" id="fleet">
+      <div className="shell">
+        <ProjectHead
+          n="03"
+          category="OPERATIONAL CLARITY"
+          name="FLEET MANAGEMENT / ETHIOPIAN ELECTRIC POWER"
+        >
+          A fleet in motion.
+          <br />
+          Operations <em>in sync.</em>
+        </ProjectHead>
+        <div className="fleet-layout">
+          <div className="fleet-copy">
+            <p className="fleet-lead">
+              500+ vehicles.
+              <br />
+              One operational picture.
+            </p>
+            <p>
+              Delivered at Orane Consulting, from booking and dispatch to live
+              tracking. Then rebuilt the infrastructure to make the entire
+              system faster and leaner.
+            </p>
+            <div className="fleet-performance">
+              <Label>SERVICE RESPONSE TIME</Label>
+              <div>
+                <span>2.0s</span>
+                <Arrow />
+                <strong>0.5s</strong>
+              </div>
+              <p>
+                75% faster responses.
+                <br />
+                Approximately 75% lower infrastructure costs.
+              </p>
+            </div>
+            <Label>REACT / NODE.JS / DOCKER</Label>
+          </div>
+          <div className="fleet-demo">
+            <div
+              className="fleet-tabs"
+              role="group"
+              aria-label="Explore fleet operations"
+            >
+              {fleetViews.map((v, i) => (
+                <button
+                  key={v.name}
+                  aria-pressed={view === i}
+                  onClick={() => setView(i)}
+                >
+                  {v.name}
+                </button>
+              ))}
+            </div>
+            <div className="fleet-map">
+              <svg
+                viewBox="0 0 740 320"
+                fill="none"
+                aria-label="Abstract fleet operations route diagram"
+                role="img"
+              >
+                <g stroke="currentColor" strokeWidth="1">
+                  <path d="M-20 80H230L430 280H760M80 -20V100L280 300M350 -20V75L650 375M-20 230H180L410 0M450 340V240L740 50M0 300 300 0M560 0V320M0 150H740" />
+                </g>
+                <motion.path
+                  animate={{
+                    d: `M${fleetViews[view].points.map((p) => p.join(",")).join(" L")}`,
+                  }}
+                  transition={{ duration: reduced ? 0 : 0.6, ease }}
+                  stroke="var(--fleet-accent)"
+                  strokeWidth="2"
+                />
+                {fleetViews[view].points.map(([cx, cy], i) => (
+                  <g key={`${view}-${i}`}>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r="14"
+                      fill="var(--fleet-bg)"
+                      stroke="var(--fleet-accent)"
+                    />
+                    <circle cx={cx} cy={cy} r="3" fill="var(--fleet-accent)" />
+                    <text
+                      x={cx + 22}
+                      y={cy + 4}
+                      fill="var(--fleet-accent)"
+                      fontSize="10"
+                      fontFamily="monospace"
+                    >
+                      V–0{i + 1}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+              <Label>SCHEMATIC VIEW / DEMONSTRATION DATA</Label>
+            </div>
+            <div className="fleet-explanation" aria-live="polite">
+              <Label>{fleetViews[view].status}</Label>
+              <h3>{fleetViews[view].heading}</h3>
+              <p>{fleetViews[view].text}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+const moreWork = [
+  {
+    name: "Clinic ERP",
+    type: "FREELANCE / OPERATIONS",
+    text: "One workspace for appointments, staff access, invoicing, receipts, and business reporting. Built with React, Node.js, Prisma, and PostgreSQL, and used for day-to-day operations at Elaria Esthetique.",
+    link: "https://glorywellnic04.web.app",
+  },
+  {
+    name: "Sway",
+    type: "PERSONAL / SOCIAL DISCOVERY",
+    text: "A cross-platform app connecting verified onboarding, private chat and calling, and in-chat date planning. Built with React Native, Node.js, PostgreSQL, Redis, and Socket.IO.",
+  },
+  {
+    name: "Enterprise vendor platforms",
+    type: "ORANE / SUPPLIER OPERATIONS",
+    text: "Supplier onboarding, document checks, digital signing, AI invoice extraction, and quotation assistance for BlackBerry, BIBA, and Avaada. React, Node.js, Anthropic SDK, and AWS connect the workflows.",
+  },
+  {
+    name: "Real-time interview platform",
+    type: "PERSONAL / COLLABORATION",
+    text: "A shared code editor, whiteboard, chat, and automated code evaluation in one interview workspace. Built with React, Node.js, Flask, and WebSockets.",
+  },
+  {
+    name: "Elaria Esthetique",
+    type: "FREELANCE / WEB EXPERIENCE",
+    text: "The public website for a wellness and aesthetic care centre in Gurgaon, bringing the clinic’s services to a responsive digital home.",
+    link: "https://www.elariaesthetique.in",
+  },
+  {
+    name: "Lumivolt Tech Solar",
+    type: "FREELANCE / WEB EXPERIENCE",
+    text: "A focused, responsive introduction to a next-generation solar module manufacturer in Ghaziabad.",
+    link: "https://www.lumivolt.co.in",
+  },
+];
+function FurtherWork() {
+  return (
+    <section className="further shell">
+      <div className="further-heading">
+        <Label>THE EXPLORATION CONTINUES</Label>
+        <h2>
+          Other things
+          <br />
+          I’ve put into the <em>world.</em>
+        </h2>
+      </div>
+      <div className="work-index">
+        {moreWork.map((p, i) => (
+          <details key={p.name}>
+            <summary>
+              <span className="index-number label">0{i + 4}</span>
+              <h3>{p.name}</h3>
+              <span className="label index-type">{p.type}</span>
+              <span className="expand" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <div className="index-detail">
+              <p>{p.text}</p>
+              {p.link && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer">
+                  Visit website <Arrow />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+function Approach() {
+  return (
+    <section className="approach shell" id="approach">
+      <div className="approach-intro">
+        <Label>THE WAY I THINK</Label>
+        <Reveal>
+          <h2>
+            Complexity is inevitable.
+            <br />
+            <em>Confusion isn’t.</em>
+          </h2>
+        </Reveal>
+        <div className="approach-description">
+          <div className="approach-aside">
+            <span className="approach-mark" aria-hidden="true">
+              a/v
+            </span>
+            <Label>
+              THINK IN SYSTEMS.
+              <br />
+              BUILD FOR PEOPLE.
+            </Label>
+          </div>
+          <div>
+            <p>
+              I’m Akul. I like the space between a difficult problem and a
+              product that feels obvious.
+            </p>
+            <p>
+              My work starts with understanding how people operate. Then I
+              connect the interfaces, intelligence, and infrastructure that help
+              them work better. From the first requirement to the release after
+              launch.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="capabilities">
+        {[
+          [
+            "01",
+            "Product engineering",
+            "From a business need to a working product.",
+            "Clinic operations · Supplier platforms",
+          ],
+          [
+            "02",
+            "AI systems",
+            "Useful intelligence, with people in control.",
+            "Claims review · Invoice extraction",
+          ],
+          [
+            "03",
+            "Backend & infrastructure",
+            "Designed for scale. Accountable to reality.",
+            "Rail catering · Fleet performance",
+          ],
+          [
+            "04",
+            "Interactive experiences",
+            "Interfaces that make complex systems legible.",
+            "Real-time collaboration · Mobile discovery",
+          ],
+        ].map(([n, title, desc, proof]) => (
+          <div className="capability" key={n}>
+            <span className="label">{n}</span>
+            <h3>{title}</h3>
+            <p>
+              {desc}
+              <span>{proof}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+      <div className="experience-note">
+        <Label>THE CONTEXT</Label>
+        <div>
+          <p>
+            <strong>EXL</strong>
+            <span>Consultant 2 · Jul 2026—Present</span>
+          </p>
+          <p>
+            <strong>Orane Consulting</strong>
+            <span>Software Engineer · Mar 2023—Jun 2026</span>
+          </p>
+          <p>
+            <strong>Amity University, Noida</strong>
+            <span>B.Tech, Information Technology · 2019—2023</span>
+          </p>
+        </div>
+        <a className="inline-link" href="/Akul-Varshney-Resume.pdf" download>
+          Full résumé <Arrow />
+        </a>
+      </div>
+    </section>
+  );
+}
+function Contact() {
+  const [copied, setCopied] = useState("Copy email");
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied("Copied");
+    } catch {
+      setCopied("Use email link");
+    }
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setCopied("Copy email"), 2500);
+  }
+  return (
+    <section className="contact" id="contact">
+      <div className="shell">
+        <div className="contact-top flex items-center justify-between">
+          <Label>A GOOD PLACE TO START</Label>
+          <Label>OPEN TO THOUGHTFUL CONVERSATIONS</Label>
+        </div>
+        <a className="contact-title" href={`mailto:${EMAIL}`}>
+          <h2>
+            Let’s make
+            <br />
+            <em>something matter.</em>
+          </h2>
+          <Arrow />
+        </a>
+        <div className="contact-bottom">
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          <button onClick={copy}>
+            <span aria-live="polite">{copied}</span>{" "}
+            <span aria-hidden="true">↗</span>
+          </button>
+          <p>
+            A product idea. A difficult problem.
+            <br />
+            Or simply a different perspective.
+          </p>
+        </div>
+        <footer>
+          <span className="label">
+            © {new Date().getFullYear()} AKUL VARSHNEY
+          </span>
+          <div>
+            <a
+              href="https://github.com/akulvarshney"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub <span className="sr-only">(opens in a new tab)</span>
+              <Arrow />
+            </a>
+            <a
+              href="https://linkedin.com/in/akulvarshney"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn <span className="sr-only">(opens in a new tab)</span>
+              <Arrow />
+            </a>
+            <a href="#top">Back to top ↑</a>
+          </div>
+          <span className="label footer-note">CONSIDERED. THEN BUILT.</span>
+        </footer>
+      </div>
+    </section>
+  );
+}
+export default function Experience() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <Hero />
+        <section className="work-intro shell" id="work">
+          <div className="work-intro-top">
+            <Label>SELECTED WORK</Label>
+            <Label>THREE SYSTEMS. REAL-WORLD CONSEQUENCES.</Label>
+          </div>
+          <Reveal>
+            <h2>
+              Behind the interface,
+              <br />a world of <em>moving parts.</em>
+            </h2>
+          </Reveal>
+          <div className="work-intro-bottom">
+            <p>
+              I make those parts work together.
+              <br />
+              Here’s what that looks like in practice.
+            </p>
+            <div className="chapter-links">
+              <a href="#rise">
+                <span>01</span> Rail catering <Arrow down />
+              </a>
+              <a href="#claims">
+                <span>02</span> Claims intelligence <Arrow down />
+              </a>
+              <a href="#fleet">
+                <span>03</span> Fleet operations <Arrow down />
+              </a>
+            </div>
+          </div>
+        </section>
+        <Rail />
+        <Claims />
+        <Fleet />
+        <FurtherWork />
+        <Approach />
+        <Contact />
+      </main>
+    </MotionConfig>
+  );
+}
