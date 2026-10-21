@@ -130,7 +130,8 @@ function Header() {
 
     // Prevent bounce at bottom of page
     if (typeof window !== "undefined") {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (latest >= maxScroll - 30) {
         return;
       }
@@ -361,7 +362,7 @@ function Hero() {
             <span className="status-dot" /> Currently building AI systems at EXL
           </p>
           <Magnetic strength={0.3}>
-            <a href="/Akul-Varshney-Resume.pdf" download>
+            <a href="/Akul-Varshney-Resume-2026.pdf" download>
               Résumé <Arrow />
             </a>
           </Magnetic>
@@ -1481,7 +1482,7 @@ function About() {
                 <br />
                 to the database to deployment.
               </p>
-              <a href="/Akul-Varshney-Resume.pdf" download>
+              <a href="/Akul-Varshney-Resume-2026.pdf" download>
                 Read my résumé <Arrow />
               </a>
             </div>

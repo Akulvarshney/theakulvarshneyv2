@@ -557,7 +557,11 @@ function Experience() {
               What I’ve delivered.
             </h2>
           </div>
-          <a className="text-link" href="/Akul-Varshney-Resume.pdf" download>
+          <a
+            className="text-link"
+            href="/Akul-Varshney-Resume-2026.pdf"
+            download
+          >
             Full résumé <Download size={16} />
           </a>
         </div>
@@ -741,7 +745,7 @@ export default function Portfolio() {
                 </a>
                 <a
                   className="text-link"
-                  href="/Akul-Varshney-Resume.pdf"
+                  href="/Akul-Varshney-Resume-2026.pdf"
                   download
                 >
                   Download résumé <Download size={16} />

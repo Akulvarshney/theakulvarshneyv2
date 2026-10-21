@@ -768,7 +768,7 @@ function Approach() {
             <span>B.Tech, Information Technology · 2019—2023</span>
           </p>
         </div>
-        <a className="inline-link" href="/Akul-Varshney-Resume.pdf" download>
+        <a className="inline-link" href="/Akul-Varshney-Resume-2026.pdf" download>
           Full résumé <Arrow />
         </a>
       </div>

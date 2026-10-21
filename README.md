@@ -25,7 +25,7 @@ The production site is statically exported to `out/`. No environment variables o
 - `components/Experience.tsx`: reusable navigation, order simulation, document comparison, performance visualization, client work, about, and contact.
 - `app/globals.css`: visual tokens, responsive compositions, Tailwind import, focus states, and reduced-motion behavior.
 - `app/layout.tsx`: metadata and document shell.
-- `public/Akul-Varshney-Resume.pdf`: downloadable resume.
+- `public/Akul-Varshney-Resume-2026.pdf`: downloadable resume.
 - `docs/design-direction.md`: discovery and experience design decisions.
 - `docs/design-critique.md`: critique, refinements, and QA evidence.
 
