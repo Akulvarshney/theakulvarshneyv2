@@ -251,6 +251,58 @@ const projects = [
       "Delivered a public-facing site that gives the manufacturer a place to introduce its business online.",
   },
   {
+    name: "One business",
+    category: "Personal",
+    type: "PERSONAL · MODULAR SAAS & ENTERPRISE ERP",
+    icon: Layers3,
+    metric: "9 selectable business modules",
+    caption: "A multi-tenant business operating system with strict row-level security.",
+    tools: [
+      "React 19",
+      "Three.js",
+      "Express 5",
+      "Prisma 7",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+    ],
+    highlights: [
+      "9 modular apps with dynamic entitlements",
+      "Real-time GST invoicing & ledger tracking",
+      "Interactive 3D visuals & cross-platform apps",
+    ],
+    detail:
+      "A modular, multi-tenant enterprise business suite architected for Indian statutory compliance, uniting CRM, finance, procurement, inventory, payroll, and ATS into one scalable operating system.",
+    outcome:
+      "Provides complete tenant isolation, role-based access control, and unified business operations across web and mobile.",
+  },
+  {
+    name: "IP Jobs Portal",
+    category: "Personal",
+    type: "PERSONAL · LEGAL & INSOLVENCY TALENT HUB",
+    icon: Globe2,
+    metric: "Specialized hiring ecosystem",
+    caption: "Connecting insolvency and finance professionals with verified firms.",
+    tools: [
+      "React 19",
+      "Express",
+      "Prisma",
+      "PostgreSQL",
+      "AWS S3",
+      "Ant Design",
+    ],
+    highlights: [
+      "Multi-tier RBAC for Candidates, Recruiters & Admins",
+      "Verified organisation onboarding with PAN/GST checks",
+      "Secure S3 document vault & interview pipeline",
+    ],
+    liveUrl: "https://github.com/Akulvarshney/ip_jobs_portal_be",
+    detail:
+      "A specialized career intelligence and hiring platform connecting insolvency resolution professionals, corporate restructuring attorneys, and finance specialists with verified organizations.",
+    outcome:
+      "Streamlines recruitment with structured application stage tracking, encrypted document storage, and company verification.",
+  },
+  {
     name: "Sway",
     category: "Personal",
     type: "PERSONAL · SOCIAL DISCOVERY & DATING",

@@ -929,7 +929,7 @@ function WebWork() {
                   src="/work/elaria.webp"
                   alt="Captured Elaria Esthetique website"
                   width="1440"
-                  height="1000"
+                  height="960"
                   loading="lazy"
                 />
                 <span className="browser-overlay">
@@ -1072,6 +1072,16 @@ function WebWork() {
   );
 }
 const otherProjects = [
+  {
+    name: "One business",
+    category: "PERSONAL / MODULAR SAAS",
+    body: "A multi-tenant enterprise operating system with 9 selectable modules (CRM, Finance, Invoicing, Procurement, Payroll, ATS) built with React 19, Three.js, Express 5, Prisma 7, PostgreSQL, and Redis.",
+  },
+  {
+    name: "IP Jobs Portal",
+    category: "PERSONAL / TALENT HUB",
+    body: "A specialized recruitment platform for insolvency professionals, legal, and finance experts with multi-tier RBAC, PAN/GST verification, AWS S3 document vault, and application tracking.",
+  },
   {
     name: "Sway",
     category: "PERSONAL / MOBILE",
@@ -1266,19 +1276,183 @@ function PersonalProjects() {
           <SectionHeader
             number="03"
             category="SELF-DIRECTED LABS"
-            count="2 INDEPENDENT PROJECTS"
+            count="4 INDEPENDENT PROJECTS"
             title="Personal projects."
-            subtitle="My own ideas, built independently. Exploring mobile architectures, real-time WebSockets, and collaborative developer tools."
+            subtitle="My own ideas, built independently. Exploring enterprise SaaS multi-tenancy, specialized recruitment engines, real-time WebSockets, and mobile architectures."
           />
         </ScrollReveal>
 
         <div className="web-projects">
-          {/* 01. Sway — Social Discovery Mobile Architecture */}
+          {/* 01. One business — Modular Enterprise SaaS */}
+          <ScrollReveal
+            as="article"
+            className="web-project onebusiness-site"
+            preset="fade-up"
+            duration={0.85}
+          >
+            <div className="browser-window">
+              <div className="floating-card-pill pill-top-right">
+                <span className="pill-pulse" />
+                <span>🏢 9 Modular Apps · Multi-Tenant RLS</span>
+              </div>
+              <div className="floating-card-pill pill-bottom-left">
+                <span>⚡ React 19 · Three.js · Prisma 7</span>
+              </div>
+              <div className="browser-bar">
+                <div className="browser-dots">
+                  <span className="dot dot-close" />
+                  <span className="dot dot-min" />
+                  <span className="dot dot-max" />
+                </div>
+                <div className="browser-address">
+                  <span>🔒 onebusiness.app / modular-saas</span>
+                </div>
+                <div className="browser-badge">
+                  <span className="live-pulse-dot" />
+                  <span>ACTIVE LAB</span>
+                </div>
+              </div>
+              <div className="browser-content">
+                <img
+                  src="/work/onebusiness.png"
+                  alt="One business modular multi-tenant SaaS dashboard displaying CRM analytics, real-time GST invoicing status, and multi-tenant activity feed"
+                  width="1440"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="browser-overlay">
+                  Explore modular architecture <Arrow />
+                </span>
+              </div>
+            </div>
+
+            <div className="web-project-copy">
+              <Meta>01 / MODULAR ENTERPRISE ARCHITECTURE & MULTI-TENANCY</Meta>
+              <div className="web-project-title">
+                <h3>One business</h3>
+                <span className="badge-tag">ENTERPRISE SAAS</span>
+              </div>
+              <p>
+                A modular, multi-tenant enterprise operating system built for
+                Indian statutory compliance. Integrates CRM, billing, procurement,
+                inventory, and payroll into one unified platform with strict
+                tenant isolation.
+              </p>
+              <ul className="project-highlights">
+                <li>
+                  <span className="check-icon">✓</span> Dynamic entitlement engine
+                  supporting 9 customer modules with Row-Level Security
+                </li>
+                <li>
+                  <span className="check-icon">✓</span> Automated GST invoicing,
+                  double-entry ledger posting & vendor management
+                </li>
+                <li>
+                  <span className="check-icon">✓</span> Three.js 3D data
+                  visualizations & cross-platform React Native mobile flows
+                </li>
+              </ul>
+              <div className="tech-tags">
+                <span>REACT 19</span>
+                <span>TYPESCRIPT</span>
+                <span>EXPRESS 5</span>
+                <span>PRISMA 7</span>
+                <span>POSTGRESQL</span>
+                <span>REDIS</span>
+                <span>THREE.JS</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* 02. IP Jobs Portal — Legal & Insolvency Recruitment */}
+          <ScrollReveal
+            as="article"
+            className="web-project ipjobs-site"
+            preset="fade-up"
+            duration={0.85}
+            delay={0.1}
+          >
+            <div className="browser-window">
+              <div className="floating-card-pill pill-top-right">
+                <span className="pill-pulse" />
+                <span>⚖️ Insolvency & Restructuring Focus</span>
+              </div>
+              <div className="floating-card-pill pill-bottom-left">
+                <span>📄 S3 Document Vault · RBAC</span>
+              </div>
+              <div className="browser-bar">
+                <div className="browser-dots">
+                  <span className="dot dot-close" />
+                  <span className="dot dot-min" />
+                  <span className="dot dot-max" />
+                </div>
+                <div className="browser-address">
+                  <span>🔒 ipjobsportal.com / talent-hub</span>
+                </div>
+                <div className="browser-badge">
+                  <span className="live-pulse-dot" />
+                  <span>ACTIVE LAB</span>
+                </div>
+              </div>
+              <div className="browser-content">
+                <img
+                  src="/work/image.png"
+                  alt="IP Jobs Portal interface showing specialized legal job filters, verified hiring organizations, and candidate application pipeline"
+                  width="1440"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="browser-overlay">
+                  Explore portal architecture <Arrow />
+                </span>
+              </div>
+            </div>
+
+            <div className="web-project-copy">
+              <Meta>02 / DOMAIN RECRUITMENT & TALENT INFRASTRUCTURE</Meta>
+              <div className="web-project-title">
+                <h3>IP Jobs Portal</h3>
+                <span className="badge-tag">TALENT HUB</span>
+              </div>
+              <p>
+                A specialized career intelligence and hiring platform connecting
+                insolvency resolution professionals, restructuring lawyers, and
+                finance leaders with verified legal and accounting firms.
+              </p>
+              <ul className="project-highlights">
+                <li>
+                  <span className="check-icon">✓</span> Multi-tier RBAC for
+                  Candidates, Recruiters, and PAN/GST verified Organisations
+                </li>
+                <li>
+                  <span className="check-icon">✓</span> Multi-parameter job
+                  discovery & automated application lifecycle tracker
+                </li>
+                <li>
+                  <span className="check-icon">✓</span> Encrypted AWS S3 document
+                  vault with presigned URLs for resumes and credentials
+                </li>
+              </ul>
+              <div className="tech-tags">
+                <span>REACT 19</span>
+                <span>NODE.JS</span>
+                <span>PRISMA</span>
+                <span>POSTGRESQL</span>
+                <span>AWS S3</span>
+                <span>ANT DESIGN</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* 03. Sway — Social Discovery Mobile Architecture */}
           <ScrollReveal
             as="article"
             className="web-project sway-site"
             preset="fade-up"
             duration={0.85}
+            delay={0.15}
           >
             <div className="browser-window">
               <div className="floating-card-pill pill-top-right">
@@ -1317,7 +1491,7 @@ function PersonalProjects() {
             </div>
 
             <div className="web-project-copy">
-              <Meta>01 / SOCIAL DISCOVERY & MOBILE ARCHITECTURE</Meta>
+              <Meta>03 / SOCIAL DISCOVERY & MOBILE ARCHITECTURE</Meta>
               <div className="web-project-title">
                 <h3>Sway</h3>
                 <span className="badge-tag">IOS & ANDROID</span>
@@ -1348,27 +1522,16 @@ function PersonalProjects() {
                 <span>REDIS</span>
                 <span>SOCKET.IO</span>
               </div>
-              <Magnetic strength={0.35}>
-                <a
-                  className="project-site-link"
-                  href="https://github.com/akulvarshney"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View project on GitHub <Arrow />
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </Magnetic>
             </div>
           </ScrollReveal>
 
-          {/* 02. Real-Time Interview Platform — Collaborative Workspace */}
+          {/* 04. Real-Time Interview Platform — Collaborative Workspace */}
           <ScrollReveal
             as="article"
             className="web-project interview-site"
             preset="fade-up"
             duration={0.85}
-            delay={0.15}
+            delay={0.2}
           >
             <div className="browser-window">
               <div className="floating-card-pill pill-top-right">
@@ -1407,7 +1570,7 @@ function PersonalProjects() {
             </div>
 
             <div className="web-project-copy">
-              <Meta>02 / COLLABORATIVE TOOLING & REAL-TIME WEBSOCKETS</Meta>
+              <Meta>04 / COLLABORATIVE TOOLING & REAL-TIME WEBSOCKETS</Meta>
               <div className="web-project-title">
                 <h3>Real-Time Interview Platform</h3>
                 <span className="badge-tag">DEV TOOLING</span>
@@ -1439,17 +1602,6 @@ function PersonalProjects() {
                 <span>WEBSOCKETS</span>
                 <span>MONACO</span>
               </div>
-              <Magnetic strength={0.35}>
-                <a
-                  className="project-site-link"
-                  href="https://github.com/akulvarshney"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View project on GitHub <Arrow />
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </Magnetic>
             </div>
           </ScrollReveal>
         </div>

@@ -3697,13 +3697,16 @@ h3 {
   overflow: hidden;
   background: #e7e7e1;
   display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
 }
 
 .browser-content img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
+  object-position: top;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
